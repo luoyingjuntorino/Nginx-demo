@@ -17,5 +17,7 @@ server {
    }
 }
 
+$ sudo rm /etc/nginx/sites-enabled/default
+
 $ sudo service nginx restart
 $ python3 -m uvicorn main:app
