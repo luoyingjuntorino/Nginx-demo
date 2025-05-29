@@ -8,20 +8,18 @@ import os
 
 API_KEY = os.environ["API_KEY"]  # 从环境变量中获取 API_KEY
 
-version = "1.3"
+version = "1.7"
 app = FastAPI()
 router = APIRouter(prefix="/api/weather/v1")
 
-# API_KEY = "fc150d0c0823c433cdcfb87dbcf8b3b3"
-
 # 👇允许本地 React 前端访问的设置
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://web.yingjuntorino.xyz"],  # 指定允许来源
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["http://localhost:5173", "https://web.yingjuntorino.xyz"],  # 指定允许来源
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 class CityInput(BaseModel):
     city: str
@@ -33,6 +31,7 @@ async def get_info():
         "version": version,
         "description": "A service to fetch weather information for a given city.",
         "timestamp": datetime.now().isoformat(),
+        "pod": os.getenv("HOSTNAME", "unknown")  # ← 获取当前 Pod 名称
     }
 
 @router.get("/weather")
@@ -65,3 +64,5 @@ def get_weather(city: str = Query(..., description="City name to get weather for
         )
 
 app.include_router(router)
+
+

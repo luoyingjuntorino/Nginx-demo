@@ -25,3 +25,5 @@ spec:
             - name: API_KEY
               value: "fc15ed0082ac433cdcfb87dbcf8bb3b3"
 ```
+
+# docker buildx build --platform linux/amd64,linux/arm64 -t yingjunluo/fastapi-weather:multi-v1.6 --push .
